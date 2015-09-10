@@ -80,7 +80,9 @@ uis.controller('uiSelectCtrl',
       $timeout(function() {
         ctrl.search = initSearchValue || ctrl.search;
         ctrl.searchInput[0].focus();
-        if(!ctrl.tagging.isActivated) {
+        var container = $element.querySelectorAll('.ui-select-choices-content');
+        var choices = container.querySelectorAll('.ui-select-choices-row');
+        if(!ctrl.tagging.isActivated && choices.length > 1) {
           _ensureHighlightVisible();
         }
       });
