@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.11.2 - 2015-09-15T16:40:46.893Z
+ * Version: 0.11.2 - 2015-09-15T19:36:33.149Z
  * License: MIT
  */
 
@@ -319,7 +319,7 @@ uis.controller('uiSelectCtrl',
         var container = $element.querySelectorAll('.ui-select-choices-content');
         var choices = container.querySelectorAll('.ui-select-choices-row');
         if(!ctrl.tagging.isActivated && choices.length > 1) {
-          _ensureHighlightVisible();
+          _ensureHighlightVisible(true);
         }
       });
     }
@@ -673,7 +673,7 @@ uis.controller('uiSelectCtrl',
     });
 
     if(KEY.isVerticalMovement(key) && ctrl.items.length > 0){
-      _ensureHighlightVisible();
+      _ensureHighlightVisible(false);
     }
 
   });
@@ -703,7 +703,7 @@ uis.controller('uiSelectCtrl',
   });
 
   // See https://github.com/ivaynberg/select2/blob/3.4.6/select2.js#L1431
-  function _ensureHighlightVisible() {
+  function _ensureHighlightVisible(centered) {
     var container = $element.querySelectorAll('.ui-select-choices-content');
     var choices = container.querySelectorAll('.ui-select-choices-row');
     if (choices.length < 1) {
@@ -719,7 +719,11 @@ uis.controller('uiSelectCtrl',
     var height = container[0].offsetHeight;
 
     if (posY > height) {
-      container[0].scrollTop += posY - height;
+      if (centered) {
+        container[0].scrollTop += posY - (height/2);
+      } else {
+        container[0].scrollTop += posY - height;
+      }
     } else if (posY < highlighted.clientHeight) {
       if (ctrl.isGrouped && ctrl.activeIndex === 0)
         container[0].scrollTop = 0; //To make group header visible when going all the way up
