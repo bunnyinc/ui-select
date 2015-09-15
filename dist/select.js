@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.11.2 - 2015-03-17T04:08:46.474Z
+ * Version: 0.11.2 - 2015-09-15T16:40:46.893Z
  * License: MIT
  */
 
@@ -316,6 +316,11 @@ uis.controller('uiSelectCtrl',
       $timeout(function() {
         ctrl.search = initSearchValue || ctrl.search;
         ctrl.searchInput[0].focus();
+        var container = $element.querySelectorAll('.ui-select-choices-content');
+        var choices = container.querySelectorAll('.ui-select-choices-row');
+        if(!ctrl.tagging.isActivated && choices.length > 1) {
+          _ensureHighlightVisible();
+        }
       });
     }
   };
